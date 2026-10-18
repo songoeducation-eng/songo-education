@@ -1,0 +1,70 @@
+# ------------------------------------------------------------------
+# Configuration technique du site (à ne modifier que si nécessaire).
+# Les coordonnées, liens de don et réseaux sociaux sont dans _data/site.yml
+# ------------------------------------------------------------------
+title: Songo Éducation
+description: >-
+  Association loi 1901 basée à Toulouse qui favorise l'accès au numérique
+  dans les écoles de Centrafrique et les échanges éducatifs entre la
+  République centrafricaine et la France.
+url: "https://www.songo-education.org"
+baseurl: ""
+lang: fr_FR
+locale: fr_FR
+timezone: Europe/Paris
+
+logo: /assets/images/identite/logo-songo-education.webp
+image: /assets/images/identite/partage-reseaux.jpg
+social:
+  name: Songo Éducation
+  links:
+    - https://www.instagram.com/songoeducation/
+    - https://www.facebook.com/profile.php?id=61554477822040
+
+# Extensions disponibles nativement sur GitHub Pages
+plugins:
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+
+# Adresse des actualités : /actualites/2025/titre-de-l-article/
+permalink: /actualites/:year/:title/
+
+feed:
+  path: actualites/flux.xml
+
+collections:
+  projets:
+    output: false
+  equipe:
+    output: false
+  partenaires:
+    output: false
+  ressources:
+    output: false
+
+defaults:
+  - scope: { path: "", type: posts }
+    values:
+      layout: article
+      auteur: Mélody Mboli
+  - scope: { path: "", type: pages }
+    values:
+      layout: page
+
+exclude:
+  - GUIDE.md
+  - README.md
+  - INVENTAIRE.md
+  - CHECKLIST.md
+  - .pages.yml
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - outils
