@@ -1,0 +1,49 @@
+---
+layout: default
+---
+<article class="article">
+  <header class="tete-page tete-article">
+    <div class="conteneur conteneur--texte">
+      <p class="meta"><a href="{{ '/actualites/' | relative_url }}">Actualités</a>{% if page.categorie %}<span class="meta__cat">{{ page.categorie }}</span>{% endif %}</p>
+      <h1>{{ page.title }}</h1>
+      <p class="meta">Publié le {% include date-fr.html date=page.date %} par {{ page.auteur }}</p>
+    </div>
+  </header>
+  {% unless content contains page.image %}{% if page.image %}
+  <div class="conteneur conteneur--large article__couverture">
+    <img src="{{ page.image | relative_url }}" alt="{{ page.image_alt }}" fetchpriority="high">
+  </div>
+  {% endif %}{% endunless %}
+  <div class="section section--serree">
+    <div class="conteneur conteneur--texte prose">
+      {{ content }}
+    </div>
+  </div>
+  <footer class="conteneur conteneur--texte article__pied">
+    {%- assign adresse = page.url | absolute_url | url_encode -%}
+    {%- assign titre_enc = page.title | url_encode -%}
+    <h2 class="article__partage-titre">Partager cet article</h2>
+    <ul class="reseaux partage" role="list">
+      <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ adresse }}" rel="noopener" target="_blank" aria-label="Partager sur Facebook (nouvel onglet)">{% include icone.html nom="facebook" %}</a></li>
+      <li><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ adresse }}" rel="noopener" target="_blank" aria-label="Partager sur LinkedIn (nouvel onglet)">{% include icone.html nom="linkedin" %}</a></li>
+      <li><a href="https://wa.me/?text={{ titre_enc }}%20{{ adresse }}" rel="noopener" target="_blank" aria-label="Partager sur WhatsApp (nouvel onglet)">{% include icone.html nom="whatsapp" %}</a></li>
+      <li><a href="https://x.com/intent/post?url={{ adresse }}&amp;text={{ titre_enc }}" rel="noopener" target="_blank" aria-label="Partager sur X (nouvel onglet)">{% include icone.html nom="x" %}</a></li>
+      <li><a href="mailto:?subject={{ titre_enc }}&amp;body={{ adresse }}" aria-label="Partager par e-mail">{% include icone.html nom="email" %}</a></li>
+    </ul>
+    <nav class="article__suite" aria-label="Autres articles">
+      {% if page.previous %}<a class="article__suite-lien" href="{{ page.previous.url | relative_url }}"><span>Article précédent</span>{{ page.previous.title }}</a>{% endif %}
+      {% if page.next %}<a class="article__suite-lien article__suite-lien--suivant" href="{{ page.next.url | relative_url }}"><span>Article suivant</span>{{ page.next.title }}</a>{% endif %}
+    </nav>
+  </footer>
+</article>
+<section class="section section--douce" aria-labelledby="titre-autres">
+  <div class="conteneur">
+    <div class="section__tete">
+      <h2 id="titre-autres">Dernières actualités</h2>
+      <a class="lien-fleche" href="{{ '/actualites/' | relative_url }}">Toutes les actualités</a>
+    </div>
+    <div class="grille-articles">
+      {% assign n = 0 %}{% for a in site.posts %}{% if a.url != page.url and n < 3 %}{% include carte-article.html article=a %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>

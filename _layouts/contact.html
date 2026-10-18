@@ -1,0 +1,51 @@
+---
+layout: page
+---
+{%- assign s = site.data.site -%}
+{%- assign cle = s.web3forms_cle | strip -%}
+<div class="section">
+  <div class="conteneur contact__grille">
+    <section class="contact__formulaire" aria-labelledby="titre-formulaire">
+      <h2 id="titre-formulaire">{{ page.titre_formulaire }}</h2>
+      {% if cle != "" %}
+      <form class="formulaire" action="https://api.web3forms.com/submit" method="POST" data-merci="{{ page.message_merci }}">
+        <input type="hidden" name="access_key" value="{{ cle }}">
+        <input type="hidden" name="from_name" value="Site {{ s.nom }}">
+        <input type="hidden" name="redirect" value="{{ '/contact/merci/' | absolute_url }}">
+        <input type="checkbox" name="botcheck" class="cache" tabindex="-1" autocomplete="off" aria-hidden="true">
+      {% else %}
+      <form class="formulaire" action="mailto:{{ s.email }}" method="POST" enctype="text/plain">
+      {% endif %}
+        <div class="champ">
+          <label for="nom">Nom <span aria-hidden="true">*</span></label>
+          <input id="nom" name="nom" type="text" autocomplete="name" required>
+        </div>
+        <div class="champ">
+          <label for="email">E-mail <span aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="champ">
+          <label for="sujet">Sujet <span aria-hidden="true">*</span></label>
+          <input id="sujet" name="subject" type="text" required>
+        </div>
+        <div class="champ">
+          <label for="message">Message <span aria-hidden="true">*</span></label>
+          <textarea id="message" name="message" rows="7" required></textarea>
+        </div>
+        <p class="formulaire__aide">Tous les champs sont obligatoires. Vos données servent uniquement à vous répondre (<a href="{{ '/donnees-personnelles/' | relative_url }}">en savoir plus</a>).</p>
+        <button class="bouton bouton--encre bouton--grand" type="submit">Envoyer</button>
+        <p class="formulaire__statut" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <aside class="contact__infos" aria-label="Coordonnées">
+      <p>{{ page.texte }}</p>
+      <ul class="liste-contact" role="list">
+        <li>{% include icone.html nom="telephone" %}<a href="tel:{{ s.telephone | remove: ' ' }}">{{ s.telephone }}</a></li>
+        <li>{% include icone.html nom="email" %}<a href="mailto:{{ s.email }}">{{ s.email }}</a></li>
+        <li>{% include icone.html nom="adresse" %}<span>{{ s.adresse }}</span></li>
+      </ul>
+      <h2 class="h3">Suivez-nous</h2>
+      {% include reseaux.html %}
+    </aside>
+  </div>
+</div>

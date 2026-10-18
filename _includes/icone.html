@@ -1,0 +1,6 @@
+{%- comment -%} Affiche l'icône demandée ; icône « lien » si elle n'existe pas. {%- endcomment -%}
+{%- assign nom_icone = include.nom | default: "site" | downcase | strip -%}
+{%- if nom_icone == "twitter" -%}{%- assign nom_icone = "x" -%}{%- endif -%}
+{%- if nom_icone == "mail" or nom_icone == "e-mail" -%}{%- assign nom_icone = "email" -%}{%- endif -%}
+{%- assign icones_dispo = "instagram,facebook,linkedin,youtube,tiktok,whatsapp,x,threads,bluesky,mastodon,telegram,snapchat,pinterest,helloasso,email,site,telephone,menu,fermer,chevron,adresse,externe,telecharger,document,don,retour" | split: "," -%}
+{%- if icones_dispo contains nom_icone -%}{%- include icones/{{ nom_icone }}.svg -%}{%- else -%}{%- include icones/site.svg -%}{%- endif -%}

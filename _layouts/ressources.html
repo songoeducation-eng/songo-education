@@ -1,0 +1,21 @@
+---
+layout: page
+---
+<div class="section">
+  <div class="conteneur">
+    <ul class="ressources" role="list">
+      {%- assign ressources = site.ressources | sort: "ordre" -%}
+      {%- for r in ressources %}
+      {%- assign cible = r.fichier | default: r.lien -%}
+      {%- assign externe = cible | slice: 0, 4 -%}
+      <li class="ressource">
+        <a href="{{ cible | relative_url }}"{% if externe == "http" %} rel="noopener" target="_blank"{% endif %}>
+          <div class="ressource__image"><img src="{{ r.image | relative_url }}" alt="" loading="lazy" decoding="async"></div>
+          <h2 class="ressource__titre">{{ r.titre }}</h2>
+          <p class="ressource__action">{% if externe == "http" %}{% include icone.html nom="externe" %}Lire en ligne{% else %}{% include icone.html nom="telecharger" %}Télécharger le PDF{% endif %}</p>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+---
+layout: default
+---
+<header class="tete-page{% if page.bandeau %} tete-page--image{% endif %}">
+  <div class="conteneur tete-page__grille">
+    <div class="tete-page__texte">
+      <h1>{{ page.title }}</h1>
+      {% if page.chapo %}<p class="chapo">{{ page.chapo }}</p>{% endif %}
+    </div>
+    {% if page.bandeau %}<div class="tete-page__image"><img src="{{ page.bandeau | relative_url }}" alt="{{ page.bandeau_alt }}" fetchpriority="high"></div>{% endif %}
+  </div>
+</header>
+{% if page.layout == "page" %}
+{% if content != "" %}<div class="section"><div class="conteneur conteneur--texte prose">{{ content }}</div></div>{% endif %}
+{% else %}
+{{ content }}
+{% endif %}

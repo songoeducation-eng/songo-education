@@ -1,0 +1,97 @@
+---
+layout: default
+---
+{%- assign s = site.data.site -%}
+<section class="bandeau" aria-labelledby="titre-accueil">
+  {%- if page.bandeau.video %}
+  <video class="bandeau__image bandeau__video" autoplay muted loop playsinline preload="metadata" poster="{{ page.bandeau.image | relative_url }}" aria-hidden="true">
+    {%- assign webm = page.bandeau.video | replace: ".mp4", ".webm" %}
+    {%- assign webm_existe = site.static_files | where: "path", webm | size %}
+    {%- if webm_existe > 0 %}<source src="{{ webm | relative_url }}" type="video/webm">{% endif %}
+    <source src="{{ page.bandeau.video | relative_url }}" type="video/mp4">
+  </video>
+  <button class="bandeau__pause" type="button" aria-pressed="false" aria-label="Mettre la vidéo en pause"><span class="bandeau__pause-icone" aria-hidden="true"></span></button>
+  {%- else %}
+  <img class="bandeau__image" src="{{ page.bandeau.image | relative_url }}" alt="{{ page.bandeau.image_alt }}" fetchpriority="high" decoding="async">
+  {%- endif %}
+  {% include drapeau.html classe="drapeau--vertical" %}
+  <div class="conteneur bandeau__contenu">
+    <h1 id="titre-accueil">{{ s.slogan }}</h1>
+    {% if page.bandeau.texte %}<p class="bandeau__texte">{{ page.bandeau.texte }}</p>{% endif %}
+    <div class="boutons">
+      {% include bouton-don.html classe="bouton--grand" %}
+      {% if page.bandeau.bouton_secondaire_lien %}<a class="bouton bouton--clair bouton--grand" href="{{ page.bandeau.bouton_secondaire_lien | relative_url }}">{{ page.bandeau.bouton_secondaire_texte }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section presentation" aria-labelledby="titre-presentation">
+  <div class="conteneur presentation__grille">
+    <div class="presentation__texte">
+      <h2 id="titre-presentation">{{ page.presentation.titre }}</h2>
+      <p class="chapo">{{ page.presentation.texte }}</p>
+      <p class="devise">{{ s.devise }}</p>
+      <a class="lien-fleche" href="{{ '/qui-sommes-nous/' | relative_url }}">Découvrir notre histoire</a>
+    </div>
+    {% if page.chiffres %}
+    <dl class="chiffres">
+      {% for c in page.chiffres %}<div class="chiffre"><dt>{{ c.nombre }}</dt><dd>{{ c.texte }}</dd></div>{% endfor %}
+    </dl>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--douce section--texture" aria-labelledby="titre-decouvrir">
+  <div class="conteneur">
+    <h2 id="titre-decouvrir">Découvrir l'association</h2>
+    {% include tuiles.html tuiles=page.tuiles %}
+  </div>
+</section>
+
+{%- assign projet = site.projets | sort: "ordre" | first -%}
+{%- if projet %}
+<section class="section section--encre projet-phare" aria-labelledby="titre-projet">
+  <div class="conteneur projet-phare__grille">
+    <img class="projet-phare__image" src="{{ projet.image | relative_url }}" alt="{{ projet.image_alt }}" loading="lazy" decoding="async">
+    <div>
+      <h2 id="titre-projet">{{ projet.titre }}</h2>
+      <p>{{ projet.resume }}</p>
+      <a class="bouton bouton--clair" href="{{ '/projets/' | relative_url }}">Lire le projet en détail</a>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section" aria-labelledby="titre-actus">
+  <div class="conteneur">
+    <div class="section__tete">
+      <h2 id="titre-actus">Dernières actualités</h2>
+      <a class="lien-fleche" href="{{ '/actualites/' | relative_url }}">Toutes les actualités</a>
+    </div>
+    <div class="grille-articles">
+      {% for a in site.posts limit:3 %}{% include carte-article.html article=a %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--douce" aria-labelledby="titre-confiance">
+  <div class="conteneur">
+    <h2 id="titre-confiance">Ils nous ont fait confiance</h2>
+    {% include diaporama-soutiens.html %}
+  </div>
+</section>
+
+{% include newsletter.html %}
+
+<section class="appel-don" aria-labelledby="titre-don">
+  <div class="conteneur appel-don__grille">
+    <div>
+      <h2 id="titre-don">Chaque don, aussi petit soit-il, aura du sens.</h2>
+      <p>Votre soutien finance l'acheminement du matériel informatique en Centrafrique et la vie de l'association.</p>
+    </div>
+    <div class="boutons">
+      {% include bouton-don.html classe="bouton--grand" %}
+      <a class="bouton bouton--contour bouton--grand" href="{{ '/nous-soutenir/' | relative_url }}">Devenir adhérent</a>
+    </div>
+  </div>
+</section>

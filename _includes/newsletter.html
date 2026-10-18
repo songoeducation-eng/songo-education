@@ -1,0 +1,9 @@
+{%- if site.data.site.newsletter_brevo_url and site.data.site.newsletter_brevo_url != "" -%}
+<section class="section section--douce newsletter" aria-labelledby="titre-newsletter">
+  <div class="conteneur conteneur--etroit">
+    <h2 id="titre-newsletter">Recevoir nos nouvelles</h2>
+    <p>Une lettre de temps en temps pour suivre l'avancée de nos projets. Désinscription en un clic.</p>
+    <iframe class="newsletter__formulaire" src="{{ site.data.site.newsletter_brevo_url }}" title="Formulaire d'inscription à la lettre d'information" loading="lazy"></iframe>
+  </div>
+</section>
+{%- endif -%}

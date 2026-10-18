@@ -1,0 +1,23 @@
+{%- assign soutiens = site.partenaires | where: "type", "Soutien" | sort: "ordre" -%}
+{%- if soutiens.size > 0 -%}
+<div class="diaporama" data-diaporama data-intervalle="5000" aria-roledescription="carrousel" aria-label="Ils nous ont fait confiance">
+  <div class="diaporama__piste">
+    {%- for p in soutiens %}
+    <figure class="diapo" role="group" aria-roledescription="diapositive" aria-label="{{ forloop.index }} sur {{ soutiens.size }}">
+      <div class="diapo__logo">
+        {% if p.site and p.site != "" %}<a href="{{ p.site }}" rel="noopener" target="_blank">{% endif %}<img src="{{ p.logo | relative_url }}" alt="{{ p.nom }}" loading="lazy" decoding="async">{% if p.site and p.site != "" %}</a>{% endif %}
+      </div>
+      <figcaption><strong>{{ p.nom }}</strong>{{ p.legende }}</figcaption>
+    </figure>
+    {%- endfor %}
+  </div>
+  <div class="diaporama__commandes">
+    <button type="button" class="diaporama__bouton" data-precedent aria-label="Précédent">‹</button>
+    <div class="diaporama__points" role="group" aria-label="Choisir une diapositive">
+      {%- for p in soutiens %}<button type="button" class="diaporama__point" aria-label="Afficher {{ p.nom }}"></button>{% endfor -%}
+    </div>
+    <button type="button" class="diaporama__bouton" data-suivant aria-label="Suivant">›</button>
+    <button type="button" class="diaporama__bouton diaporama__lecture" data-lecture aria-pressed="false" aria-label="Arrêter le défilement automatique">❚❚</button>
+  </div>
+</div>
+{%- endif -%}

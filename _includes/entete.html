@@ -1,0 +1,37 @@
+<header class="entete">
+  <div class="conteneur entete__barre">
+    <a class="entete__logo" href="{{ '/' | relative_url }}">
+      <img src="{{ '/assets/images/identite/logo-songo-education.webp' | relative_url }}" alt="Songo Éducation – accueil" width="640" height="248">
+    </a>
+    <button class="entete__menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icone-ouvrir">{% include icone.html nom="menu" %}</span><span class="icone-fermer">{% include icone.html nom="fermer" %}</span>
+      <span class="entete__menu-libelle">Menu</span>
+    </button>
+    <nav class="nav" id="menu-principal" aria-label="Menu principal">
+      <ul class="nav__liste" role="list">
+        {%- for item in site.data.navigation %}
+        {%- assign actif = false -%}
+        {%- if page.url == item.lien -%}{%- assign actif = true -%}{%- endif -%}
+        {%- for s in item.sous_menu -%}{%- if page.url == s.lien -%}{%- assign actif = true -%}{%- endif -%}{%- endfor -%}
+        {%- if page.layout == "article" -%}{%- for s in item.sous_menu -%}{%- if s.lien == "/actualites/" -%}{%- assign actif = true -%}{%- endif -%}{%- endfor -%}{%- endif %}
+        <li class="nav__item{% if item.sous_menu %} nav__item--parent{% endif %}{% if actif %} est-actif{% endif %}">
+          {%- if item.sous_menu %}
+          <button class="nav__lien nav__deroulant" type="button" aria-expanded="false">{{ item.titre }}{% include icone.html nom="chevron" %}</button>
+          <ul class="nav__sous-menu" role="list">
+            {%- for s in item.sous_menu %}
+            <li><a href="{{ s.lien | relative_url }}"{% if page.url == s.lien %} aria-current="page"{% endif %}>{{ s.titre }}</a></li>
+            {%- endfor %}
+          </ul>
+          {%- else %}
+          <a class="nav__lien" href="{{ item.lien | relative_url }}"{% if page.url == item.lien %} aria-current="page"{% endif %}>{{ item.titre }}</a>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+      <div class="nav__actions">
+        {% include reseaux.html classe="reseaux--entete" %}
+        {% include bouton-don.html %}
+      </div>
+    </nav>
+  </div>
+</header>

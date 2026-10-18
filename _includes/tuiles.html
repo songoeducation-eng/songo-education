@@ -1,0 +1,11 @@
+<ul class="tuiles tuiles--{{ include.tuiles | size }}" role="list">
+  {%- for t in include.tuiles %}
+  <li class="tuile">
+    <a href="{{ t.lien | relative_url }}">
+      <div class="tuile__image"><img src="{{ t.image | relative_url }}" alt="{{ t.image_alt }}" loading="lazy" decoding="async"></div>
+      <h3 class="tuile__titre">{{ t.titre }}</h3>
+      <p>{{ t.texte }}</p>
+    </a>
+  </li>
+  {%- endfor %}
+</ul>

@@ -1,0 +1,19 @@
+---
+layout: page
+---
+{%- assign projets = site.projets | sort: "ordre" -%}
+{%- for p in projets %}
+<article class="projet">
+  <div class="conteneur conteneur--texte prose">
+    <h2>{{ p.titre }}</h2>
+    {% if p.image %}<img class="projet__image" src="{{ p.image | relative_url }}" alt="{{ p.image_alt }}" loading="lazy" decoding="async">{% endif %}
+    {{ p.content }}
+  </div>
+</article>
+{%- endfor %}
+<div class="section">
+  <div class="conteneur conteneur--texte encart-don">
+    <p>{{ page.appel_don }}</p>
+    {% include bouton-don.html %}
+  </div>
+</div>

@@ -1,0 +1,1 @@
+<a class="bouton bouton--don{% if include.classe %} {{ include.classe }}{% endif %}" href="{{ site.data.site.don.lien }}" rel="noopener" target="_blank">{% include icone.html nom="don" %}<span>{{ include.texte | default: site.data.site.don.texte_bouton }}</span></a>

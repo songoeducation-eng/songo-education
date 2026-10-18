@@ -1,0 +1,13 @@
+{%- assign soutiens = site.partenaires | where: "type", "Soutien" | sort: "ordre" -%}
+{%- if soutiens.size > 0 -%}
+<ul class="soutiens" role="list">
+  {%- for p in soutiens %}
+  <li class="soutien">
+    {% if p.site and p.site != "" %}<a href="{{ p.site }}" rel="noopener" target="_blank">{% endif %}
+      <span class="soutien__logo"><img src="{{ p.logo | relative_url }}" alt="{{ p.nom }}" loading="lazy" decoding="async"></span>
+    {% if p.site and p.site != "" %}</a>{% endif %}
+    {% if include.legendes %}<p class="soutien__legende"><strong>{{ p.nom }}</strong><br>{{ p.legende }}</p>{% endif %}
+  </li>
+  {%- endfor %}
+</ul>
+{%- endif -%}

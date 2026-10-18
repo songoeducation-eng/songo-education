@@ -1,0 +1,14 @@
+---
+layout: page
+---
+<div class="section"><div class="conteneur"><ol class="valeurs" role="list">
+  {% for v in page.valeurs %}
+  <li class="valeur">
+    <div class="valeur__texte">
+      <h2><span class="valeur__num">{{ forloop.index }}.</span> {{ v.titre }}</h2>
+      <p>{{ v.texte }}</p>
+    </div>
+    {% if v.image %}<img class="valeur__image" src="{{ v.image | relative_url }}" alt="{{ v.image_alt }}" loading="lazy" decoding="async">{% endif %}
+  </li>
+  {% endfor %}
+</ol></div></div>

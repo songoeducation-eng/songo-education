@@ -1,0 +1,16 @@
+---
+layout: page
+---
+{%- assign annees = site.posts | group_by_exp: "a", "a.date | date: '%Y'" -%}
+<div class="section">
+  <div class="conteneur">
+    {% for annee in annees %}
+    <section class="annee" aria-labelledby="annee-{{ annee.name }}">
+      <h2 id="annee-{{ annee.name }}" class="annee__titre">{{ annee.name }}</h2>
+      <div class="grille-articles">
+        {% for a in annee.items %}{% include carte-article.html article=a %}{% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</div>

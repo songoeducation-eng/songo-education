@@ -1,0 +1,41 @@
+<footer class="pied">
+  {% include drapeau.html classe="drapeau--horizontal" %}
+  <div class="conteneur pied__grille">
+    <section class="pied__bloc pied__apropos" aria-labelledby="pied-apropos">
+      <h2 id="pied-apropos" class="pied__titre">À propos de nous</h2>
+      <p>{{ site.data.site.presentation_courte }}</p>
+      <img class="pied__drapeau" src="{{ '/assets/images/identite/drapeau-centrafrique.webp' | relative_url }}" alt="Drapeau de la République centrafricaine" width="96" height="64" loading="lazy">
+      <p class="pied__devise">{{ site.data.site.devise }}</p>
+    </section>
+    <nav class="pied__bloc" aria-labelledby="pied-nav">
+      <h2 id="pied-nav" class="pied__titre">Le site</h2>
+      <ul role="list">
+        {%- for item in site.data.navigation %}{% unless item.lien == "/" %}
+        <li><a href="{{ item.lien | relative_url }}">{{ item.titre }}</a></li>
+        {%- for s in item.sous_menu %}{% unless s.lien == item.lien %}<li class="pied__sous"><a href="{{ s.lien | relative_url }}">{{ s.titre }}</a></li>{% endunless %}{% endfor %}
+        {%- endunless %}{% endfor %}
+      </ul>
+    </nav>
+    <section class="pied__bloc" aria-labelledby="pied-contact">
+      <h2 id="pied-contact" class="pied__titre">Contact</h2>
+      <ul class="pied__contact" role="list">
+        <li>{% include icone.html nom="telephone" %}<a href="tel:{{ site.data.site.telephone | remove: ' ' }}">{{ site.data.site.telephone }}</a></li>
+        <li>{% include icone.html nom="email" %}<a href="mailto:{{ site.data.site.email }}">{{ site.data.site.email }}</a></li>
+        <li>{% include icone.html nom="adresse" %}<span>{{ site.data.site.adresse }}</span></li>
+      </ul>
+    </section>
+    <section class="pied__bloc" aria-labelledby="pied-suivre">
+      <h2 id="pied-suivre" class="pied__titre">Suivez-nous</h2>
+      {% include reseaux.html classe="reseaux--pied" %}
+      {% include bouton-don.html classe="pied__don" %}
+    </section>
+  </div>
+  <div class="conteneur pied__bas">
+    <p>{{ site.data.site.copyright }}</p>
+    <ul role="list">
+      <li><a href="{{ '/mentions-legales/' | relative_url }}">Mentions légales</a></li>
+      <li><a href="{{ '/donnees-personnelles/' | relative_url }}">Gestion des données personnelles</a></li>
+      <li><a href="{{ '/actualites/flux.xml' | relative_url }}">Flux RSS</a></li>
+    </ul>
+  </div>
+</footer>

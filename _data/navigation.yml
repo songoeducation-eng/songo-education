@@ -1,0 +1,29 @@
+# Menu principal. « sous_menu » crée une liste déroulante.
+- titre: Accueil
+  lien: /
+- titre: Qui sommes-nous ?
+  lien: /qui-sommes-nous/
+  sous_menu:
+    - titre: Qui sommes-nous ?
+      lien: /qui-sommes-nous/
+    - titre: Nos valeurs
+      lien: /nos-valeurs/
+    - titre: Notre équipe
+      lien: /equipe/
+    - titre: Notre organisation
+      lien: /organisation/
+- titre: Nos projets
+  lien: /projets/
+- titre: Partenaires
+  lien: /partenaires/
+- titre: S'informer
+  lien: /s-informer/
+  sous_menu:
+    - titre: Actualités
+      lien: /actualites/
+    - titre: Ressources
+      lien: /ressources/
+- titre: Nous soutenir
+  lien: /nous-soutenir/
+- titre: Contact
+  lien: /contact/

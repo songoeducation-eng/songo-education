@@ -1,0 +1,17 @@
+---
+layout: page
+---
+<div class="section">
+  <div class="conteneur conteneur--large">
+    {% if page.organigramme %}<img class="organigramme" src="{{ page.organigramme | relative_url }}" alt="{{ page.organigramme_alt }}" loading="lazy" decoding="async">{% endif %}
+    <ol class="poles" role="list">
+      {% for p in page.poles %}
+      <li class="pole pole--{{ p.couleur | default: 'bleu' }}">
+        <h2 class="h3">{{ forloop.index }}. {{ p.titre }}</h2>
+        <p>{{ p.texte }}</p>
+        <ul>{% for m in p.missions %}<li>{{ m }}</li>{% endfor %}</ul>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>

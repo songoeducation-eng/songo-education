@@ -1,0 +1,43 @@
+---
+layout: default
+---
+<header class="tete-page tete-page--image{% if page.adhesion.fond %} tete-page--fond{% endif %}">
+  {% if page.adhesion.fond %}<img class="tete-page__fond" src="{{ page.adhesion.fond | relative_url }}" alt="{{ page.adhesion.fond_alt }}" fetchpriority="high">{% endif %}
+  <div class="conteneur tete-page__grille">
+    <div class="tete-page__texte">
+      <h1>{{ page.adhesion.titre }}</h1>
+      <p class="chapo">{{ page.adhesion.texte }}</p>
+      <p>{{ page.adhesion.appel }}</p>
+      {% include bouton-don.html texte=page.adhesion.bouton classe="bouton--grand" %}
+    </div>
+    <div class="tete-page__image"><img src="{{ page.adhesion.image | relative_url }}" alt="{{ page.adhesion.image_alt }}" fetchpriority="high"></div>
+  </div>
+</header>
+
+<section class="section{% if page.transparence.fond %} section--fond{% endif %}" aria-labelledby="titre-transparence">
+  {% if page.transparence.fond %}<img class="section__fond" src="{{ page.transparence.fond | relative_url }}" alt="Les feuilles tropicales" loading="lazy" decoding="async">{% endif %}
+  <div class="conteneur">
+    <h2 id="titre-transparence">{{ page.transparence.titre }}</h2>
+    <ul class="postes" role="list">
+      {% for p in page.transparence.postes %}
+      <li class="poste"><h3>{{ p.titre }}</h3>{{ p.texte | markdownify }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--douce" aria-labelledby="titre-donateurs">
+  <div class="conteneur">
+    <h2 id="titre-donateurs">{{ page.donateurs.titre }}</h2>
+    <ul class="donateurs" role="list">
+      {% for n in page.donateurs.noms %}<li>{{ n }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="titre-confiance">
+  <div class="conteneur">
+    <h2 id="titre-confiance">{{ page.confiance_titre }}</h2>
+    {% include diaporama-soutiens.html %}
+  </div>
+</section>

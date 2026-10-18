@@ -1,0 +1,22 @@
+---
+layout: page
+---
+<div class="section"><div class="conteneur"><ul class="equipe" role="list">
+  {%- assign membres = site.equipe | sort: "ordre" -%}
+  {%- for m in membres %}
+  <li class="membre{% if m.in_memoriam %} membre--memoire{% endif %}">
+    <img class="membre__photo" src="{{ m.photo | relative_url }}" alt="Portrait de {{ m.nom }}" loading="lazy" decoding="async">
+    <div class="membre__texte">
+      <h2 class="membre__nom">{{ m.nom }}</h2>
+      {% if m.in_memoriam %}<p class="membre__memoire">In memoriam ({{ m.in_memoriam }})</p>{% endif %}
+      <p class="membre__role">{{ m.role }}</p>
+      {{ m.content }}
+      {% if m.reseaux %}
+      <ul class="reseaux reseaux--petit" role="list">
+        {% for r in m.reseaux %}<li><a href="{{ r.lien }}" rel="noopener" target="_blank" aria-label="{{ r.nom }} de {{ m.nom }} (nouvel onglet)">{% include icone.html nom=r.icone %}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </li>
+  {%- endfor %}
+</ul></div></div>

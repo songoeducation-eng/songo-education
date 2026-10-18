@@ -1,0 +1,5 @@
+<ul class="reseaux{% if include.classe %} {{ include.classe }}{% endif %}" role="list">
+  {%- for r in site.data.site.reseaux %}
+  <li><a href="{{ r.lien }}" rel="noopener" target="_blank" aria-label="{{ r.nom }} (nouvel onglet)" title="{{ r.nom }}">{% include icone.html nom=r.icone %}</a></li>
+  {%- endfor %}
+</ul>

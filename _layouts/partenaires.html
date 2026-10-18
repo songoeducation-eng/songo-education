@@ -1,0 +1,31 @@
+---
+layout: page
+---
+{%- assign locaux = site.partenaires | where_exp: "p", "p.type != 'Soutien'" | sort: "ordre" -%}
+{%- for p in locaux %}
+<section class="partenaire" aria-labelledby="partenaire-{{ forloop.index }}">
+  <div class="conteneur">
+    <h2 id="partenaire-{{ forloop.index }}">{{ p.nom }}</h2>
+    <div class="partenaire__grille">
+      <div class="prose">{{ p.content }}</div>
+      <aside class="fiche-contact" aria-label="Contact de l'école">
+        <h3>Contact de l'école</h3>
+        <ul role="list">
+          {% if p.telephone and p.telephone != "" %}<li>{% include icone.html nom="telephone" %}<a href="tel:{{ p.telephone | remove: ' ' }}">{{ p.telephone }}</a></li>{% endif %}
+          {% if p.email and p.email != "" %}<li>{% include icone.html nom="email" %}<a href="mailto:{{ p.email }}">{{ p.email }}</a></li>{% endif %}
+          {% if p.facebook and p.facebook != "" %}<li>{% include icone.html nom="facebook" %}<a href="{{ p.facebook }}" rel="noopener" target="_blank">Facebook</a></li>{% endif %}
+          {% if p.site and p.site != "" %}<li>{% include icone.html nom="site" %}<a href="{{ p.site }}" rel="noopener" target="_blank">Site internet</a></li>{% endif %}
+        </ul>
+      </aside>
+    </div>
+    {% if p.galerie %}<ul class="galerie" role="list">{% for g in p.galerie %}<li><img src="{{ g.image | relative_url }}" alt="{{ g.texte }}" loading="lazy" decoding="async"></li>{% endfor %}</ul>{% endif %}
+    {% if p.galerie_activites %}<ul class="galerie galerie--3" role="list">{% for g in p.galerie_activites %}<li><img src="{{ g.image | relative_url }}" alt="{{ g.texte }}" loading="lazy" decoding="async"></li>{% endfor %}</ul>{% endif %}
+  </div>
+</section>
+{%- endfor %}
+<section class="section section--douce" aria-labelledby="titre-soutiens">
+  <div class="conteneur">
+    <h2 id="titre-soutiens">Ils nous soutiennent en France</h2>
+    {% include soutiens.html legendes=true %}
+  </div>
+</section>

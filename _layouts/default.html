@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#13254A">
+  {% seo title=page.title %}
+  <link rel="preload" href="{{ '/assets/fonts/lexend-latin-700-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/songo.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+  <link rel="icon" href="{{ '/assets/images/identite/favicon-32.png' | relative_url }}" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/identite/apple-touch-icon.png' | relative_url }}">
+  {% feed_meta %}
+  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</head>
+<body class="mise-en-page--{{ page.layout | default: 'page' }}">
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+  {% include entete.html %}
+  <main id="contenu" tabindex="-1">
+    {{ content | replace: '<img src=', '<img loading="lazy" decoding="async" src=' }}
+  </main>
+  {% include pied.html %}
+</body>
+</html>
