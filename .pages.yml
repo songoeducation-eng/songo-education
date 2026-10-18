@@ -1,0 +1,658 @@
+# ------------------------------------------------------------------
+# Configuration de Pages CMS (https://pagescms.org)
+# Décrit les formulaires d'édition du site. À ne modifier que si l'on
+# veut ajouter un nouveau champ ou un nouveau type de contenu.
+# ------------------------------------------------------------------
+
+media:
+  input: assets/images
+  output: /assets/images
+  categories: [image, document]
+  rename: safe
+
+settings:
+  content:
+    merge: true   # conserve les réglages techniques non affichés dans les formulaires
+  commit:
+    templates:
+      create: "Ajout de {path}"
+      update: "Modification de {path}"
+      delete: "Suppression de {path}"
+      rename: "Renommage de {oldPath} en {newPath}"
+
+components:
+  image_principale:
+    label: Image
+    type: image
+    description: "Format paysage conseillé, 1600 pixels de large au maximum (JPG, PNG ou WebP)."
+    options:
+      extensions: [jpg, jpeg, png, webp]
+  texte_alternatif:
+    label: Description de l'image (pour les personnes malvoyantes et Google)
+    type: string
+    description: "Décrivez ce que montre l'image en une phrase. Ex. : « Élèves devant les ordinateurs »."
+  reseau:
+    label: Réseau social
+    type: object
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{fields.nom}"
+    fields:
+      - name: nom
+        label: Nom affiché
+        type: string
+        required: true
+        description: "Ex. : YouTube"
+      - name: lien
+        label: Adresse de la page
+        type: string
+        required: true
+        description: "Copiez l'adresse complète, qui commence par https://"
+      - name: icone
+        label: Icône
+        type: select
+        required: true
+        options:
+          values:
+            - { name: instagram, label: Instagram }
+            - { name: facebook, label: Facebook }
+            - { name: linkedin, label: LinkedIn }
+            - { name: youtube, label: YouTube }
+            - { name: tiktok, label: TikTok }
+            - { name: whatsapp, label: WhatsApp }
+            - { name: x, label: X (Twitter) }
+            - { name: threads, label: Threads }
+            - { name: bluesky, label: Bluesky }
+            - { name: mastodon, label: Mastodon }
+            - { name: telegram, label: Telegram }
+            - { name: snapchat, label: Snapchat }
+            - { name: pinterest, label: Pinterest }
+            - { name: helloasso, label: HelloAsso }
+            - { name: email, label: E-mail }
+            - { name: site, label: Autre site (icône lien) }
+
+content:
+  # ---------------------------------------------------------------- Actualités
+  - name: actualites
+    label: Actualités
+    type: collection
+    path: _posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, date, categorie]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: date
+        label: Date de publication
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: categorie
+        label: Catégorie
+        type: select
+        options:
+          values: ["Vie de l'association", "Collecte de matériel", "Événements", "Hommage"]
+      - name: image
+        component: image_principale
+        label: Image de couverture
+        description: "Affichée dans la liste des actualités, sur l'accueil et lors des partages sur les réseaux."
+      - name: image_alt
+        component: texte_alternatif
+      - name: description
+        label: Résumé (1 ou 2 phrases)
+        type: text
+        description: "Affiché sous le titre dans les listes et sur Google."
+      - name: body
+        label: Texte de l'article
+        type: rich-text
+        options:
+          format: markdown
+          path: assets/images/actualites
+      - name: redirect_from
+        label: Anciennes adresses (ne pas toucher)
+        type: string
+        list: true
+        hidden: true
+      - name: layout
+        type: string
+        hidden: true
+
+  # ---------------------------------------------------------------- Projets
+  - name: projets
+    label: Projets
+    type: collection
+    path: _projets
+    filename: "{primary}.md"
+    view:
+      fields: [titre, ordre]
+      primary: titre
+      default:
+        sort: ordre
+        order: asc
+    fields:
+      - name: titre
+        label: Nom du projet
+        type: string
+        required: true
+      - name: resume
+        label: Résumé (affiché sur l'accueil)
+        type: text
+      - name: image
+        component: image_principale
+      - name: image_alt
+        component: texte_alternatif
+      - name: ordre
+        label: Ordre d'affichage (1 = en premier)
+        type: number
+      - name: body
+        label: Présentation complète
+        type: rich-text
+        options:
+          format: markdown
+          path: assets/images/pages
+
+  # ---------------------------------------------------------------- Équipe
+  - name: equipe
+    label: Équipe
+    type: collection
+    path: _equipe
+    filename: "{primary}.md"
+    view:
+      fields: [nom, role, ordre]
+      primary: nom
+      default:
+        sort: ordre
+        order: asc
+    fields:
+      - name: nom
+        label: Prénom et NOM
+        type: string
+        required: true
+      - name: role
+        label: Rôle dans l'association
+        type: string
+        description: "Ex. : Trésorière de SONGO ÉDUCATION"
+      - name: photo
+        label: Photo
+        type: image
+        description: "Photo carrée de préférence (au moins 600 × 600 pixels)."
+        options:
+          path: assets/images/equipe
+          extensions: [jpg, jpeg, png, webp]
+      - name: ordre
+        label: Ordre d'affichage (1 = en premier)
+        type: number
+      - name: in_memoriam
+        label: In memoriam (dates)
+        type: string
+        description: "À remplir uniquement pour rendre hommage à un membre décédé. Ex. : 21 avril 1973 - 04 avril 2026"
+      - name: reseaux
+        component: reseau
+        label: Réseaux sociaux de la personne
+      - name: body
+        label: Présentation
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+
+  # ---------------------------------------------------------------- Partenaires
+  - name: partenaires
+    label: Partenaires
+    type: collection
+    path: _partenaires
+    filename: "{primary}.md"
+    view:
+      fields: [nom, type, ordre]
+      primary: nom
+      default:
+        sort: ordre
+        order: asc
+    fields:
+      - name: nom
+        label: Nom
+        type: string
+        required: true
+      - name: type
+        label: Type de partenaire
+        type: select
+        required: true
+        description: "« Partenaire local » = présenté en détail sur la page Partenaires. « Soutien » = logo dans « Ils nous ont fait confiance »."
+        options:
+          values: ["Partenaire local", "Soutien"]
+      - name: ordre
+        label: Ordre d'affichage
+        type: number
+      - name: logo
+        label: Logo (ou photo)
+        type: image
+        options:
+          path: assets/images/partenaires
+          extensions: [jpg, jpeg, png, webp, svg]
+      - name: legende
+        label: Phrase courte
+        type: string
+        description: "Ex. : Nous a fait don de 18 unités centrales et 18 écrans !"
+      - name: site
+        label: Site internet
+        type: string
+      - name: telephone
+        label: Téléphone
+        type: string
+      - name: email
+        label: E-mail
+        type: string
+      - name: facebook
+        label: Page Facebook
+        type: string
+      - name: galerie
+        label: Photos
+        type: object
+        list: true
+        fields:
+          - name: image
+            label: Photo
+            type: image
+            options:
+              path: assets/images/partenaires
+          - name: texte
+            component: texte_alternatif
+      - name: galerie_activites
+        label: Photos des activités
+        type: object
+        list: true
+        fields:
+          - name: image
+            label: Photo
+            type: image
+            options:
+              path: assets/images/partenaires
+          - name: texte
+            component: texte_alternatif
+      - name: body
+        label: Présentation
+        type: rich-text
+        options:
+          format: markdown
+
+  # ---------------------------------------------------------------- Ressources
+  - name: ressources
+    label: Ressources
+    type: collection
+    path: _ressources
+    filename: "{primary}.md"
+    view:
+      fields: [titre, ordre]
+      primary: titre
+      default:
+        sort: ordre
+        order: asc
+    fields:
+      - name: titre
+        label: Titre
+        type: string
+        required: true
+      - name: ordre
+        label: Ordre d'affichage (1 = en premier)
+        type: number
+      - name: image
+        label: Image de couverture
+        type: image
+        options:
+          path: assets/images/ressources
+          extensions: [jpg, jpeg, png, webp]
+      - name: lien
+        label: Lien vers le document (Calaméo, etc.)
+        type: string
+        description: "Laissez vide si vous déposez un PDF ci-dessous."
+      - name: fichier
+        label: Ou document PDF à déposer
+        type: file
+        options:
+          path: assets/documents
+          extensions: [pdf]
+
+  # ---------------------------------------------------------------- Réglages
+  - name: reglages
+    label: Réglages du site (coordonnées, don, réseaux)
+    type: file
+    path: _data/site.yml
+    fields:
+      - name: nom
+        label: Nom de l'association
+        type: string
+      - name: slogan
+        label: Slogan (grand titre de l'accueil)
+        type: string
+      - name: devise
+        label: Devise
+        type: string
+      - name: presentation_courte
+        label: Présentation courte (pied de page)
+        type: text
+      - name: telephone
+        label: Téléphone
+        type: string
+      - name: email
+        label: E-mail
+        type: string
+      - name: adresse
+        label: Adresse du siège
+        type: string
+      - name: copyright
+        label: Mention en bas de page
+        type: string
+      - name: don
+        label: Bouton de don
+        type: object
+        fields:
+          - name: texte_bouton
+            label: Texte du bouton
+            type: string
+          - name: lien
+            label: Lien HelloAsso
+            type: string
+      - name: reseaux
+        component: reseau
+        label: Réseaux sociaux de l'association
+        description: "Ajoutez un réseau : son icône apparaît partout automatiquement."
+      - name: web3forms_cle
+        label: Clé Web3Forms (formulaire de contact)
+        type: string
+        description: "Voir GUIDE.md, étape 8."
+      - name: newsletter_brevo_url
+        label: Adresse du formulaire Brevo (lettre d'information, facultatif)
+        type: string
+        description: "Laissez vide pour masquer le bloc d'inscription."
+
+  - name: menu
+    label: Menu du site
+    type: file
+    path: _data/navigation.yml
+    list: true
+    fields:
+      - name: titre
+        label: Libellé
+        type: string
+      - name: lien
+        label: Adresse (ex. /contact/)
+        type: string
+      - name: sous_menu
+        label: Sous-menu
+        type: object
+        list: true
+        fields:
+          - name: titre
+            label: Libellé
+            type: string
+          - name: lien
+            label: Adresse
+            type: string
+
+  # ---------------------------------------------------------------- Pages
+  - name: pages_fixes
+    label: Pages
+    type: group
+    items:
+      - name: page_accueil
+        label: Accueil
+        type: file
+        path: index.md
+        fields:
+          - name: title
+            type: string
+            hidden: true
+          - name: layout
+            type: string
+            hidden: true
+          - name: description
+            label: Description pour Google
+            type: text
+          - name: bandeau
+            label: Grand bandeau
+            type: object
+            fields:
+              - name: video
+                label: Vidéo de fond (MP4, facultatif)
+                type: file
+                description: "Vidéo courte, sans son, 10 Mo maximum. Laissez vide pour afficher seulement la photo."
+                options:
+                  path: assets/videos
+                  extensions: [mp4]
+              - name: image
+                component: image_principale
+                label: Photo du bandeau (affichée pendant le chargement de la vidéo)
+              - name: image_alt
+                component: texte_alternatif
+              - name: texte
+                label: Phrase sous le slogan
+                type: string
+              - name: bouton_secondaire_texte
+                label: Texte du 2e bouton
+                type: string
+              - name: bouton_secondaire_lien
+                label: Lien du 2e bouton
+                type: string
+          - name: presentation
+            label: Présentation
+            type: object
+            fields:
+              - name: titre
+                label: Titre
+                type: string
+              - name: texte
+                label: Texte
+                type: text
+          - name: chiffres
+            label: Chiffres clés
+            type: object
+            list: true
+            fields:
+              - name: nombre
+                label: Nombre
+                type: string
+              - name: texte
+                label: Explication
+                type: string
+          - name: tuiles
+            label: Vignettes « Découvrir l'association »
+            type: object
+            list: true
+            fields:
+              - name: titre
+                label: Titre
+                type: string
+              - name: texte
+                label: Texte
+                type: string
+              - name: image
+                component: image_principale
+              - name: image_alt
+                component: texte_alternatif
+              - name: lien
+                label: Lien
+                type: string
+          - name: redirect_from
+            type: string
+            list: true
+            hidden: true
+
+      - name: page_soutenir
+        label: Nous soutenir
+        type: file
+        path: pages/nous-soutenir.md
+        fields:
+          - { name: title, type: string, hidden: true }
+          - { name: layout, type: string, hidden: true }
+          - { name: permalink, type: string, hidden: true }
+          - { name: redirect_from, type: string, list: true, hidden: true }
+          - name: description
+            label: Description pour Google
+            type: text
+          - name: adhesion
+            label: Devenir adhérent
+            type: object
+            fields:
+              - { name: titre, label: Titre, type: string }
+              - { name: texte, label: Texte, type: text }
+              - { name: appel, label: Phrase avant le bouton, type: string }
+              - { name: bouton, label: Texte du bouton, type: string }
+              - { name: image, component: image_principale }
+              - { name: image_alt, component: texte_alternatif }
+              - { name: fond, component: image_principale, label: Image de fond }
+              - { name: fond_alt, component: texte_alternatif }
+          - name: transparence
+            label: Transparence financière
+            type: object
+            fields:
+              - { name: titre, label: Titre, type: string }
+              - { name: fond, component: image_principale, label: Image de fond }
+              - name: postes
+                label: Postes de dépense
+                type: object
+                list: true
+                fields:
+                  - { name: titre, label: Titre, type: string }
+                  - { name: texte, label: Texte, type: text }
+          - name: donateurs
+            label: Donateurs
+            type: object
+            fields:
+              - { name: titre, label: Titre, type: string }
+              - { name: noms, label: Noms, type: string, list: true }
+          - name: confiance_titre
+            label: Titre du bloc des soutiens
+            type: string
+
+      - name: page_valeurs
+        label: Nos valeurs
+        type: file
+        path: pages/nos-valeurs.md
+        fields:
+          - { name: title, label: Titre de la page, type: string }
+          - { name: layout, type: string, hidden: true }
+          - { name: permalink, type: string, hidden: true }
+          - { name: redirect_from, type: string, list: true, hidden: true }
+          - { name: description, label: Description pour Google, type: text }
+          - name: valeurs
+            label: Valeurs
+            type: object
+            list: true
+            fields:
+              - { name: titre, label: Titre, type: string }
+              - { name: texte, label: Texte, type: text }
+              - { name: image, component: image_principale }
+              - { name: image_alt, component: texte_alternatif }
+
+      - name: page_contact
+        label: Contact
+        type: file
+        path: pages/contact.md
+        fields:
+          - { name: title, label: Titre de la page, type: string }
+          - { name: layout, type: string, hidden: true }
+          - { name: permalink, type: string, hidden: true }
+          - { name: description, label: Description pour Google, type: text }
+          - { name: chapo, label: Phrase d'introduction, type: string }
+          - { name: titre_formulaire, label: Titre du formulaire, type: string }
+          - { name: texte, label: Texte à côté du formulaire, type: text }
+          - { name: message_merci, label: Message après envoi, type: string }
+
+      - name: page_s_informer
+        label: S'informer
+        type: file
+        path: pages/s-informer.md
+        fields:
+          - { name: title, label: Titre de la page, type: string }
+          - { name: layout, type: string, hidden: true }
+          - { name: permalink, type: string, hidden: true }
+          - { name: redirect_from, type: string, list: true, hidden: true }
+          - { name: description, label: Description pour Google, type: text }
+          - { name: chapo, label: Phrase d'introduction, type: string }
+          - name: tuiles
+            label: Vignettes
+            type: object
+            list: true
+            fields:
+              - { name: titre, label: Titre, type: string }
+              - { name: texte, label: Texte, type: string }
+              - { name: image, component: image_principale }
+              - { name: image_alt, component: texte_alternatif }
+              - { name: lien, label: Lien, type: string }
+
+      - name: page_organisation
+        label: Notre organisation
+        type: file
+        path: pages/organisation.md
+        fields:
+          - { name: title, label: Titre de la page, type: string }
+          - { name: layout, type: string, hidden: true }
+          - { name: permalink, type: string, hidden: true }
+          - { name: redirect_from, type: string, list: true, hidden: true }
+          - { name: description, label: Description pour Google, type: text }
+          - { name: chapo, label: Phrase d'introduction, type: text }
+          - { name: organigramme, label: Organigramme, type: image, options: { path: assets/images/pages } }
+          - { name: organigramme_alt, component: texte_alternatif, label: Description de l'organigramme }
+          - name: poles
+            label: Pôles
+            type: object
+            list: true
+            fields:
+              - { name: titre, label: Nom du pôle, type: string }
+              - name: couleur
+                label: Couleur
+                type: select
+                options:
+                  values: [rouge, jaune, vert, bleu]
+              - { name: texte, label: Composition, type: text }
+              - { name: missions, label: Missions, type: string, list: true }
+
+      - name: pages_texte
+        label: Pages de texte
+        description: "Qui sommes-nous, Organisation, Mentions légales, Données personnelles… et les introductions des autres pages."
+        type: collection
+        path: pages
+        exclude: [nous-soutenir.md, nos-valeurs.md, contact.md, s-informer.md, organisation.md, contact-merci.md]
+        view:
+          fields: [title]
+          primary: title
+        fields:
+          - name: title
+            label: Titre de la page
+            type: string
+            required: true
+          - name: chapo
+            label: Phrase d'introduction (sous le titre)
+            type: text
+          - name: description
+            label: Description pour Google
+            type: text
+          - name: bandeau
+            label: Image à côté du titre (facultatif)
+            type: image
+            options:
+              path: assets/images/pages
+          - name: bandeau_alt
+            component: texte_alternatif
+          - name: appel_don
+            label: Phrase avant le bouton de don (page Projets)
+            type: string
+          - { name: layout, type: string, hidden: true }
+          - { name: permalink, type: string, hidden: true }
+          - { name: redirect_from, type: string, list: true, hidden: true }
+          - name: body
+            label: Contenu
+            type: rich-text
+            options:
+              format: markdown
+              path: assets/images/pages
