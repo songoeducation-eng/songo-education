@@ -1,32 +1,16 @@
-# ------------------------------------------------------------------
-# COORDONNÉES, DON ET RÉSEAUX SOCIAUX
-# Toute modification ici se répercute sur l'ensemble du site.
-# Vous pouvez aussi modifier ce fichier depuis Pages CMS
-# (menu « Réglages du site »).
-# ------------------------------------------------------------------
-
 nom: Songo Éducation
 slogan: Favoriser l'accès au numérique dans les écoles de Centrafrique.
 devise: Maboko na maboko (main dans la main)
-presentation_courte: >-
-  L'association a pour objectif de favoriser l'échange entre des partenaires
-  centrafricains et français dans le domaine de l'éducation solidaire.
-
-telephone: "+33 6 32 98 72 47"
+presentation_courte: L'association a pour objectif de favoriser l'échange entre
+  des partenaires centrafricains et français dans le domaine de l'éducation
+  solidaire.
+telephone: +33 6 32 98 72 47
 email: songo.education@gmail.com
-copyright: "© 2023 by Mélody Mboli"
+copyright: © 2023 by Mélody Mboli
 adresse: 32 avenue François Collignon, 31200 Toulouse
-
 don:
   texte_bouton: Faire un don
   lien: https://www.helloasso.com/associations/songo-education/formulaires/1
-
-# Réseaux sociaux : ajoutez une ligne « - nom / lien / icone » pour un nouveau
-# réseau. L'icône s'affiche automatiquement dans l'en-tête, le pied de page
-# et la page Contact.
-# Icônes disponibles : instagram, facebook, linkedin, youtube, tiktok,
-# whatsapp, x, threads, bluesky, mastodon, telegram, snapchat, pinterest,
-# helloasso, email, site (icône « lien » utilisée par défaut).
 reseaux:
   - nom: Instagram
     lien: https://www.instagram.com/songoeducation/
@@ -34,12 +18,4 @@ reseaux:
   - nom: Facebook
     lien: https://www.facebook.com/profile.php?id=61554477822040
     icone: facebook
-
-# Formulaire de contact (service gratuit Web3Forms).
-# Collez ici la clé reçue par e-mail sur https://web3forms.com (voir GUIDE.md, étapes 8 et 9).
-# Tant que la clé est vide, le formulaire ouvre la messagerie du visiteur.
-web3forms_cle: ""
-
-# Lettre d'information (facultatif, service gratuit Brevo).
-# Collez ici l'adresse du formulaire Brevo (voir GUIDE.md, étapes 8 et 9). Vide = bloc masqué.
-newsletter_brevo_url: ""
+web3forms_cle: 620b38d8-3c97-4fa2-8e1b-a05cd819732e
