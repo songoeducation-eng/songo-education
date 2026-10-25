@@ -7,11 +7,10 @@ bandeau_alt: Toutes les mains dans
 redirect_from:
   - /mentions-légales
 ---
-
 Ce site internet est géré par l'association SONGO ÉDUCATION
 
 - Présidente de l'association : Mélody MBOLI
-- Siège social : 32 avenue François Collignon 31200 Toulouse
+- Siège social : 1 impasse du Pigeonnier 31120 Roques
 - Numéro de téléphone : 06.32.98.72.47
 - Mail : [songo.education@gmail.com](mailto:songo.education@gmail.com)
 - N° SIRET : 924 258 635 00011
